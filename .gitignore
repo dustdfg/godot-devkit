@@ -1,0 +1,8 @@
+godot/
+llvm-project/
+
+stage*/
+profiles/
+
+godot-devkit/
+godot-devkit.tar.xz
