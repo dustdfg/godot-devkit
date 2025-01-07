@@ -61,9 +61,6 @@ endef
 
 # -DLLVM_BUILD_UTILS=OFF disables llvm-ar llvm-as and other "binutils"
 # Maybe we should pass it to stage1 too?
-#
-# Do we need -DLLVM_NATIVE_TOOL_DIR when we doesn't build llvm-tblgen,
-# clang-tblgrn and llvm "binutils"
 define release_args
 	-DLLVM_ENABLE_PROJECTS="clang;lld" \
 	-DLLVM_TARGETS_TO_BUILD="X86" \
@@ -83,9 +80,6 @@ define release_args
 endef
 
 ########################
-
-# 		-DLLVM_ENABLE_ZLIB=FORCE_ON \
-# 		-DLLVM_ENABLE_ZSTD=FORCE_ON \
 
 stage1: llvm-project
 	$(cmake_exec) \
