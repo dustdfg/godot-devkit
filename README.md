@@ -1,6 +1,6 @@
 # Godot-devkit
 
-Godot-devkit is a project to build LLVM sharpened for speed building Godot
+Godot-devkit is a project to build LLVM sharpened for speed building Godot. Main aim is to make a drop-in clang distribution for building Godot. Which means if devkit distribution fails compiling godot with certain configuration, system distribution should fail with the same configuration too, otherwise it should be considered a bug.
 
 ## Building
 
