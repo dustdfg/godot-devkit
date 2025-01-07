@@ -3,7 +3,7 @@ JOBS = 4
 GODOT_VERSION = 4.3
 LLVM_VERSION = 19.1.6
 
-LTO_TYPE = Thin
+LTO_TYPE = Full
 
 # Does it even work?
 VP_COUNTERS = 20
