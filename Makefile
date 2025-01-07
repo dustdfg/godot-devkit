@@ -3,7 +3,7 @@
 build: godot-devkit.tar.xz
 
 clean:
-	-@rm -rf stage1 stage2 stage3 profiles/*
+	-@rm -rf stage1 stage2 stage3 profiles/* godot-devkit godot-devkit.tar.xz
 
 #######################
 
