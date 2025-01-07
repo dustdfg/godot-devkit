@@ -3,7 +3,7 @@
 build: godot-devkit.tar.xz
 
 clean:
-	-@rm -rf stage1 stage2 stage3 stage4 profiles/*
+	-@rm -rf stage1 stage2 stage3 profiles/*
 
 #######################
 
@@ -125,48 +125,20 @@ profiles/stage2.profdata:: stage2/completed
 	$(MAKE) -f godot_profile.mk run-profile
 
 ########################
-# -DLLVM_PARALLEL_LINK_JOBS=2
 
 stage3: profiles/stage2.profdata
-	$(cmake_exec) \
-		$(release_args) \
-		-DLLVM_BUILD_INSTRUMENTED=CSIR \
-		-DLLVM_BUILD_RUNTIME=NO \
-		-DLLVM_VP_COUNTERS_PER_SITE=$(VP_COUNTERS) \
-		-DLLVM_PROFDATA_FILE=$(abspath profiles/stage2.profdata)
-
-stage3/completed: stage3
-	ninja -C $(@D) clang lld -j$(JOBS)
-	@touch $@
-
-########################
-
-.SECONDEXPANSION:
-profiles/stage3.profdata:: profile_target_file=$@
-profiles/stage3.profdata:: instrumented_tool_dir=stage3
-profiles/stage3.profdata:: stage3/completed
-	$(MAKE) -f godot_profile.mk run-profile
-
-########################
-
-profiles/final.profdata: profiles/stage2.profdata profiles/stage3.profdata
-	$(profdata_tool) merge --compress-all-sections --num-threads $(JOBS) -o=$(abspath $@) $(abspath $?)
-
-########################
-
-stage4: profiles/final.profdata
 	$(cmake_exec) \
 		$(release_args) \
 		-DCMAKE_INSTALL_PREFIX=godot-devkit \
 		-DCMAKE_SKIP_INSTALL_RPATH=YES \
 		-DLLVM_BUILD_RUNTIME=NO \
-		-DLLVM_PROFDATA_FILE=$(abspath profiles/final.profdata)
+		-DLLVM_PROFDATA_FILE=$(abspath profiles/stage2.profdata)
 
-stage4/completed: stage4
+stage3/completed: stage3
 	ninja -C $(@D) install-clang-stripped install-lld-stripped install-clang-resource-headers install-clang-headers -j$(JOBS)
 	@touch $@
 
 ########################
 
-godot-devkit.tar.xz: stage4/completed
+godot-devkit.tar.xz: stage3/completed
 	tar cvf - godot-devkit | xz -9e -T$(JOBS) > godot-devkit.tar.xz
