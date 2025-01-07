@@ -78,6 +78,7 @@ define release_args
 	-DLLVM_ENABLE_EH=OFF \
 	-DLLVM_ENABLE_RTTI=ON \
 	\
+	-DLLVM_BUILD_STATIC=ON \
 	-DLLVM_ENABLE_LTO=$(LTO_TYPE)
 endef
 
@@ -157,6 +158,7 @@ stage4: profiles/final.profdata
 	$(cmake_exec) \
 		$(release_args) \
 		-DCMAKE_INSTALL_PREFIX=godot-devkit \
+		-DCMAKE_SKIP_INSTALL_RPATH=YES \
 		-DLLVM_BUILD_RUNTIME=NO \
 		-DLLVM_PROFDATA_FILE=$(abspath profiles/final.profdata)
 
