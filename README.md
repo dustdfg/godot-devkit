@@ -31,3 +31,4 @@ Some systems doens't provide static versions of libc, libstdc++ and libatomic so
 * Add BOLT
 * Try to do CSIR instrumentation instead of usual IR
 * Check if CSIR instrumentation was used correctly (IR+CSIR)
+* Change string printed by `clang --version` to `godot-devkit` or something similar
