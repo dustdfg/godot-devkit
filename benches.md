@@ -62,3 +62,29 @@ Benchmark 1: git clean -fxd && PATH=/storage/godot-devkit/godot-devkit/bin:/usr/
 
 **Devkit llvm** is faster than **system llvm** for 27.26%
 
+#### Benchmark 3
+
+**OS: debian testing**
+
+**CPU governor: performance**
+
+**Process priority: -20**
+
+Hardware specs are unrelieble (especially disk)
+
+---
+
+System llvm:
+```
+Benchmark 1: git clean -fxd && PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin && scons platform=linux arch=x86_64 use_llvm=yes linker=lld dev_mode=yes dev_build=yes
+  Time (abs ≡):        2828.667 s               [User: 10614.495 s, System: 355.474 s]
+```
+
+Devkit llvm:
+```
+Benchmark 1: git clean -fxd && PATH=/storage/godot-devkit/godot-devkit/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin && scons platform=linux arch=x86_64 use_llvm=yes linker=lld import_env_vars=PATH dev_mode=yes dev_build=yes
+  Time (abs ≡):        1834.505 s               [User: 6697.079 s, System: 310.315 s]
+```
+
+**Devkit llvm** is faster than **system llvm** for 35.14%
+
