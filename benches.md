@@ -2,6 +2,8 @@
 
 All the parts of each benchmark are made in the same environment but each benchmark itseld could be made in different environments
 
+Average speed up: **31.16%**
+
 #### Benchmark 1
 
 **OS: debian testing**
@@ -32,9 +34,9 @@ Benchmark 1: git clean -fxd && PATH=/storage/godot-devkit/godot-devkit/bin:/usr/
   Time (abs ≡):        1514.723 s               [User: 5511.020 s, System: 141.982 s]
 ```
 
-**Devkit llvm** is faster than **system gcc** for 40.89%
+**Devkit llvm** is faster than **system gcc** for **40.89%**
 
-**Devkit llvm** is faster than **system llvm** for 30.67%
+**Devkit llvm** is faster than **system llvm** for **30.67%**
 
 #### Benchmark 2
 
@@ -60,7 +62,7 @@ Benchmark 1: git clean -fxd && PATH=/storage/godot-devkit/godot-devkit/bin:/usr/
   Time (abs ≡):        3878.840 s               [User: 11493.142 s, System: 310.039 s]
 ```
 
-**Devkit llvm** is faster than **system llvm** for 27.26%
+**Devkit llvm** is faster than **system llvm** for **27.26%**
 
 #### Benchmark 3
 
@@ -86,5 +88,5 @@ Benchmark 1: git clean -fxd && PATH=/storage/godot-devkit/godot-devkit/bin:/usr/
   Time (abs ≡):        1834.505 s               [User: 6697.079 s, System: 310.315 s]
 ```
 
-**Devkit llvm** is faster than **system llvm** for 35.14%
+**Devkit llvm** is faster than **system llvm** for **35.14%**
 
