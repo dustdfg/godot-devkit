@@ -83,7 +83,7 @@ endef
 
 stage1: llvm-project
 	$(cmake_exec) \
-		-DLLVM_ENABLE_PROJECTS="clang;lld" \
+		-DLLVM_ENABLE_PROJECTS="clang;lld;bolt" \
 		-DLLVM_ENABLE_RUNTIMES="compiler-rt" \
 		-DLLVM_TARGETS_TO_BUILD="X86" \
 		\
@@ -92,7 +92,9 @@ stage1: llvm-project
 		-DLLVM_USE_LINKER=lld
 
 stage1/completed: stage1
-	ninja -C $(@D) clang lld llvm-profdata compiler-rt -j$(JOBS)
+	ninja -C $(@D) clang lld llvm-profdata compiler-rt \
+		install-llvm-bolt install-perf2bolt install-merge-fdata \
+		install-llvm-boltdiff install-bolt_rt -j$(JOBS)
 	@touch $@
 
 profdata_tool = $(abspath stage1/bin/llvm-profdata)
@@ -126,6 +128,7 @@ stage3: profiles/stage2.profdata
 		-DCMAKE_INSTALL_PREFIX=godot-devkit \
 		-DCMAKE_SKIP_INSTALL_RPATH=YES \
 		-DLLVM_BUILD_RUNTIME=NO \
+		-DCMAKE_EXE_LINKER_FLAGS="-Wl,--emit-relocs" \
 		-DLLVM_PROFDATA_FILE=$(abspath profiles/stage2.profdata)
 
 stage3/completed: stage3
