@@ -1,0 +1,37 @@
+### Benchmarks
+
+All the parts of each benchmark are made in the same environment but each benchmark itseld could be made in different environments
+
+#### Benchmark 1
+
+**OS: debian testing**
+
+**CPU governor: performance**
+
+**Process priority: -20**
+
+Hardware specs are unrelieble (especially disk)
+
+---
+
+System gcc:
+```
+Benchmark 1: git clean -fxd && PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin && scons platform=linux arch=x86_64 scu_build=yes scu_limit=1024
+  Time (abs ≡):        2562.812 s               [User: 9675.808 s, System: 138.435 s]
+```
+
+System llvm:
+```
+Benchmark 1: git clean -fxd && PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin && scons platform=linux arch=x86_64 use_llvm=yes linker=lld scu_build=yes scu_limit=1024
+  Time (abs ≡):        2184.732 s               [User: 8066.044 s, System: 170.967 s]
+```
+
+Devkit llvm:
+```
+Benchmark 1: git clean -fxd && PATH=/storage/godot-devkit/godot-devkit/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin && scons platform=linux arch=x86_64 use_llvm=yes linker=lld import_env_vars=PATH scu_build=yes scu_limit=1024
+  Time (abs ≡):        1514.723 s               [User: 5511.020 s, System: 141.982 s]
+```
+
+**Devkit llvm** is faster than **system gcc** for 40.89%
+
+**Devkit llvm** is faster than **system llvm** for 30.67%
