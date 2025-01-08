@@ -93,8 +93,7 @@ stage1: llvm-project
 
 stage1/completed: stage1
 	ninja -C $(@D) clang lld llvm-profdata compiler-rt \
-		install-llvm-bolt install-perf2bolt install-merge-fdata \
-		install-llvm-boltdiff install-bolt_rt -j$(JOBS)
+		llvm-bolt merge-fdata bolt_rt -j$(JOBS)
 	@touch $@
 
 profdata_tool = $(abspath stage1/bin/llvm-profdata)
