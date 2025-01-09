@@ -32,3 +32,6 @@ Some systems doens't provide static versions of libc, libstdc++ and libatomic so
 * Try to do CSIR instrumentation instead of usual IR
 * Check if CSIR instrumentation was used correctly (IR+CSIR)
 * Change string printed by `clang --version` to `godot-devkit` or something similar
+	* `CLANG_VENDOR`, `CLANG_REPOSITORY_STRING` allow to change string only partially :/
+* Merge profiles when they are closed to not require 40GB disk for profile
+* Place profiles inside RAM to not wear disk to much
