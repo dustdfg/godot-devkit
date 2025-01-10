@@ -127,9 +127,9 @@ stage3: profiles/stage2.profdata
 		-DCMAKE_INSTALL_PREFIX=godot-devkit \
 		-DCMAKE_SKIP_INSTALL_RPATH=YES \
 		-DLLVM_BUILD_RUNTIME=NO \
-		-DCMAKE_EXE_LINKER_FLAGS="-Wl,--emit-relocs" \
 		-DLLVM_BUILD_STATIC=OFF \
 		-DLLVM_PROFDATA_FILE=$(abspath profiles/stage2.profdata)
+		#-DCMAKE_EXE_LINKER_FLAGS="-Wl,--emit-relocs" \
 
 stage3/completed: stage3
 	ninja -C $(@D) install-clang install-lld install-clang-resource-headers install-clang-headers -j$(JOBS)
