@@ -1,6 +1,8 @@
 # Prevent compiling multiple godots in parallel
 .NOTPARALLEL:
 
+shm := /dev/shm
+
 godot:
 	git clone --depth 1 --branch $(GODOT_VERSION) https://github.com/godotengine/godot
 
@@ -18,19 +20,20 @@ $(profile_target_file):: \
 profiles/$(instrumented_tool_dir)/1.profdata \
 profiles/$(instrumented_tool_dir)/2.profdata \
 profiles/$(instrumented_tool_dir)/3.profdata: godot
-
-	-@rm -rf $(abspath $(basename $@))
+	cp -r $(abspath profiles) $(shm)
+	-@rm -rf $(shm)/$(basename $@)
+	@mkdir -p $(shm)/$(basename $@)
 	@mkdir -p $(abspath $(basename $@))
 	cd godot && \
 	git clean -fxd && \
 	PATH="$(abspath $(instrumented_tool_dir))/bin:$$PATH" \
-	LLVM_PROFILE_FILE="$(abspath $(basename $@))/%p.profraw" \
+	LLVM_PROFILE_FILE="$(shm)/$(basename $@)/%$(shell expr $(JOBS) + 2)m.profraw" \
 	scons -j$(JOBS) $(scons_compiler) $(scons_common) $(scons_opts)
 
 	$(profdata_tool) merge --compress-all-sections --num-threads $(JOBS) \
-		-o=$(abspath $@) $(abspath $(basename $@))/*.profraw
+		-o=$(abspath $@) $(shm)/$(basename $@)/*.profraw
 
-	-@rm -rf $(abspath $(basename $@))
+	-@rm -rf $(shm)/$(basename $@)
 
 scons_common = platform="linuxbsd" arch="x86_64" scu_limit="1024" verbose="yes" scu_build="yes"
 scons_compiler = use_llvm="yes" linker="lld" CC="clang" CXX="clang++" import_env_vars="PATH,LLVM_PROFILE_FILE"
