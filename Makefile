@@ -117,6 +117,7 @@ stage2/completed: stage2
 profiles/stage2.profdata:: profile_target_file=$@
 profiles/stage2.profdata:: instrumented_tool_dir=stage2
 profiles/stage2.profdata:: stage2/completed
+	-mkdir $(abspath profiles)
 	$(MAKE) -f godot_profile.mk run-profile
 
 ########################
